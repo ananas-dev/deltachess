@@ -1,3 +1,4 @@
+use juniper::EmptySubscription;
 use juniper::FieldResult;
 use juniper::RootNode;
 
@@ -29,9 +30,9 @@ struct NewHuman {
 
 pub struct QueryRoot;
 
-#[juniper::object]
+#[juniper::graphql_object]
 impl QueryRoot {
-    fn human(id: String) -> FieldResult<Human> {
+    fn human(_id: String) -> FieldResult<Human> {
         Ok(Human {
             id: "1234".to_owned(),
             name: "Luke".to_owned(),
@@ -43,7 +44,7 @@ impl QueryRoot {
 
 pub struct MutationRoot;
 
-#[juniper::object]
+#[juniper::graphql_object]
 impl MutationRoot {
     fn create_human(new_human: NewHuman) -> FieldResult<Human> {
         Ok(Human {
@@ -55,8 +56,8 @@ impl MutationRoot {
     }
 }
 
-pub type Schema = RootNode<'static, QueryRoot, MutationRoot>;
+pub type Schema = RootNode<'static, QueryRoot, MutationRoot, EmptySubscription>;
 
-pub fn create_schema() -> Schema {
-    Schema::new(QueryRoot {}, MutationRoot {})
+pub fn schema() -> Schema {
+    Schema::new(QueryRoot {}, MutationRoot {}, EmptySubscription::new())
 }
