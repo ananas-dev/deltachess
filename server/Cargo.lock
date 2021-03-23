@@ -472,6 +472,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "81cddc5f91628367664cc7c69714ff08deee8a3efc54623011c772544d7b2767"
 
 [[package]]
+name = "arrayvec"
+version = "0.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "23b62fc65de8e4e7f52534fb52b0f3ed04746ae267519eef2a83941e8085068b"
+
+[[package]]
 name = "ascii"
 version = "0.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -698,6 +704,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
+name = "chess"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2ed299b171ec34f372945ad6726f7bc1d2afd5f59fb8380f64f48e2bab2f0ec8"
+dependencies = [
+ "arrayvec",
+ "failure",
+ "nodrop",
+ "rand 0.7.3",
+]
+
+[[package]]
 name = "chrono"
 version = "0.4.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -889,13 +907,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "deltachess-backend"
+name = "deltachess-server"
 version = "0.1.0"
 dependencies = [
  "actix 0.11.0",
  "actix-cors",
  "actix-session",
  "actix-web",
+ "chess",
  "env_logger",
  "juniper",
  "juniper_actix",
@@ -1010,6 +1029,28 @@ dependencies = [
  "proc-macro2",
  "quote",
  "rustversion",
+ "syn",
+ "synstructure",
+]
+
+[[package]]
+name = "failure"
+version = "0.1.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d32e9bd16cc02eae7db7ef620b392808b89f6a5e16bb3497d159c6b92a0f4f86"
+dependencies = [
+ "backtrace",
+ "failure_derive",
+]
+
+[[package]]
+name = "failure_derive"
+version = "0.1.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "aa4da3c766cd7a0db8242e326e9e4e081edd567072893ed320008189715366a4"
+dependencies = [
+ "proc-macro2",
+ "quote",
  "syn",
  "synstructure",
 ]
@@ -1784,6 +1825,12 @@ dependencies = [
  "libc",
  "winapi 0.3.9",
 ]
+
+[[package]]
+name = "nodrop"
+version = "0.1.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "72ef4a56884ca558e5ddb05a1d1e7e1bfd9a68d9ed024c21704cc98872dae1bb"
 
 [[package]]
 name = "ntapi"

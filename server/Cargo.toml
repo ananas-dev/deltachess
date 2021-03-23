@@ -1,5 +1,5 @@
 [package]
-name = "deltachess-backend"
+name = "deltachess-server"
 version = "0.1.0"
 authors = ["ananas-dev <lucienfiorini@protonmail.com>"]
 edition = "2018"
@@ -14,3 +14,4 @@ env_logger = "0.8"
 juniper = "0.15.3"
 juniper_actix = "0.2"
 mongodb = "1.2"
+chess = "3.2"

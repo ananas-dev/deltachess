@@ -1,3 +1,5 @@
+use chess::{Board, Game};
+use juniper::EmptyMutation;
 use juniper::EmptySubscription;
 use juniper::FieldResult;
 use juniper::RootNode;
@@ -12,12 +14,17 @@ enum Episode {
 use juniper::{GraphQLEnum, GraphQLInputObject, GraphQLObject};
 
 #[derive(GraphQLObject)]
-#[graphql(description = "A humanoid creature in the Star Wars universe")]
-struct Human {
+#[graphql(description = "Game of chess")]
+struct ChessGame {
     id: String,
-    name: String,
-    appears_in: Vec<Episode>,
-    home_planet: String,
+    can_declare_draw: bool,
+    board: ChessBoard,
+}
+
+#[derive(GraphQLObject)]
+#[graphql(description = "Representation of a chessboard")]
+struct ChessBoard {
+    fen: String,
 }
 
 #[derive(GraphQLInputObject)]
@@ -32,15 +39,20 @@ pub struct QueryRoot;
 
 #[juniper::graphql_object]
 impl QueryRoot {
-    fn human(_id: String) -> FieldResult<Human> {
-        Ok(Human {
-            id: "1234".to_owned(),
-            name: "Luke".to_owned(),
-            appears_in: vec![Episode::NewHope],
-            home_planet: "Mars".to_owned(),
+    fn game(id: String) -> FieldResult<ChessGame> {
+        let game = Game::new();
+        assert_eq!(game.current_position(), Board::default());
+        Ok(ChessGame {
+            id: id.to_owned(),
+            can_declare_draw: game.can_declare_draw(),
+            board: ChessBoard {
+                fen: format!("{}", game.current_position()),
+            },
         })
     }
 }
+
+/*
 
 pub struct MutationRoot;
 
@@ -56,8 +68,10 @@ impl MutationRoot {
     }
 }
 
-pub type Schema = RootNode<'static, QueryRoot, MutationRoot, EmptySubscription>;
+*/
+
+pub type Schema = RootNode<'static, QueryRoot, EmptyMutation, EmptySubscription>;
 
 pub fn schema() -> Schema {
-    Schema::new(QueryRoot {}, MutationRoot {}, EmptySubscription::new())
+    Schema::new(QueryRoot {}, EmptyMutation::new(), EmptySubscription::new())
 }
