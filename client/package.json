@@ -3,10 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "@types/d3": "^6.3.0",
+    "@types/jest": "^26.0.21",
+    "@types/node": "^14.14.35",
+    "sass": "^1.32.8",
     "solid-js": "^0.24.15",
-    "solid-scripts": "0.0.54"
+    "solid-scripts": "^0.0.54",
+    "typescript": "^4.2.3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@lubert/chess.ts": "^0.15.1",
+    "d3": "^6.6.0"
+  },
   "scripts": {
     "start": "solid-scripts start",
     "build": "solid-scripts build",
