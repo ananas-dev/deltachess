@@ -1,25 +1,29 @@
-FROM rust:1-slim-buster as base
+FROM rust as planner
+WORKDIR /deltachess-server
+# We only pay the installation cost once, 
+# it will be cached from the second build onwards
+# To ensure a reproducible build consider pinning 
+# the cargo-chef version with `--version X.X.X`
+RUN cargo install cargo-chef 
+COPY . .
+RUN cargo chef prepare  --recipe-path recipe.json
 
-ENV USER=root
+FROM rust as cacher
+WORKDIR /deltachess-server
+RUN cargo install cargo-chef
+COPY --from=planner /deltachess-server/recipe.json recipe.json
+RUN cargo chef cook --release --recipe-path recipe.json
 
-WORKDIR /var/www/app
-RUN cargo init
-COPY Cargo.toml Cargo.toml
-COPY src src
-COPY static static
-RUN cargo fetch
+FROM rust as builder
+WORKDIR /deltachess-server
+COPY . .
+# Copy over the cached dependencies
+COPY --from=cacher /deltachess-server/target target
+COPY --from=cacher /usr/local/cargo /usr/local/cargo
+RUN cargo build --release --bin deltachess-server
 
-CMD [ "cargo", "test", "--offline" ]
-
-FROM base AS builder
-RUN cargo build --release --offline
-
-FROM rust:1-slim-buster
-WORKDIR /var/www/app
-
-COPY --from=base /var/www/app/static /var/www/app/static
-COPY --from=builder /var/www/app/target/release/mini-actix-react-example /usr/bin/mini-actix-react-example
-
+FROM rust as runtime
+WORKDIR /deltachess-server
+COPY --from=builder /deltachess-server/target/release/deltachess-server /usr/local/bin
 EXPOSE 8080
-
-CMD [ "/usr/bin/mini-actix-react-example" ]
+ENTRYPOINT ["./usr/local/bin/deltachess-server"]

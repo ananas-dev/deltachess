@@ -1,52 +1,105 @@
-This project was bootstrapped with [Create Solid](https://github.com/ryansolid/create-solid). Create Solid is a Fork of Create React App.
+*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+# svelte app
 
-### `npm start`
+This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+```bash
+npx degit sveltejs/template svelte-app
+cd svelte-app
+```
 
-### `npm test`
+*Note that you will need to have [Node.js](https://nodejs.org) installed.*
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Get started
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
+Install the dependencies...
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+```bash
+cd svelte-app
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+...then start [Rollup](https://rollupjs.org):
 
-### Code Splitting
+```bash
+npm run dev
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
 
-### Analyzing the Bundle Size
+By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
 
-### Making a Progressive Web App
+## Building and running in production mode
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+To create an optimised version of the app:
 
-### Advanced Configuration
+```bash
+npm run build
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
 
-### Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Single-page app mode
 
-### `npm run build` fails to minify
+By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
+
+```js
+"start": "sirv public --single"
+```
+
+## Using TypeScript
+
+This template comes with a script to set up a TypeScript development environment, you can run it immediately after cloning the template with:
+
+```bash
+node scripts/setupTypeScript.js
+```
+
+Or remove the script via:
+
+```bash
+rm scripts/setupTypeScript.js
+```
+
+## Deploying to the web
+
+### With [Vercel](https://vercel.com)
+
+Install `vercel` if you haven't already:
+
+```bash
+npm install -g vercel
+```
+
+Then, from within your project folder:
+
+```bash
+cd public
+vercel deploy --name my-project
+```
+
+### With [surge](https://surge.sh/)
+
+Install `surge` if you haven't already:
+
+```bash
+npm install -g surge
+```
+
+Then, from within your project folder:
+
+```bash
+npm run build
+surge public my-project.surge.sh
+```
