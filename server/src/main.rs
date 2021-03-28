@@ -27,5 +27,5 @@ pub async fn main() -> std::io::Result<()> {
             .wrap(CookieSession::signed(&[0; 32]).secure(false))
             .configure(graphql::routes::routes)
     });
-    server.bind(("127.0.0.1", 8080)).unwrap().run().await
+    server.bind(("0.0.0.0", 8080)).unwrap().run().await
 }

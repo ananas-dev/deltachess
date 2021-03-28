@@ -26,4 +26,4 @@ FROM rust as runtime
 WORKDIR /deltachess-server
 COPY --from=builder /deltachess-server/target/release/deltachess-server /usr/local/bin
 EXPOSE 8080
-ENTRYPOINT ["./usr/local/bin/deltachess-server"]
+ENTRYPOINT ["/usr/local/bin/deltachess-server"]

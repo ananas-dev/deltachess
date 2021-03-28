@@ -4,7 +4,7 @@ use juniper_actix::{graphql_handler, playground_handler};
 use crate::graphql::schema::Schema;
 
 async fn playground_route() -> Result<HttpResponse, Error> {
-    playground_handler("/graphql", None).await
+    playground_handler("/api/graphql", None).await
 }
 async fn graphql_route(
     req: actix_web::HttpRequest,
@@ -16,9 +16,9 @@ async fn graphql_route(
 
 pub fn routes(app: &mut web::ServiceConfig) {
     app.service(
-        web::resource("/graphql")
+        web::resource("/api/graphql")
             .route(web::post().to(graphql_route))
             .route(web::get().to(graphql_route)),
     )
-    .service(web::resource("/playground").route(web::get().to(playground_route)));
+    .service(web::resource("/api/playground").route(web::get().to(playground_route)));
 }
