@@ -1,23 +1,32 @@
-version: "3.9"  # optional since v1.27.0
+version: "3.9" # optional since v1.27.0
 services:
-  server:
-    build: server
+  reverse-proxy:
+    image: nginx
+    container_name: reverse-proxy
+    depends_on:
+      - server
+      - client
+    volumes:
+      - ./reverse_proxy/nginx.conf:/etc/nginx/nginx.conf
     ports:
-      - "5000:5000"
-    networks:
-      - main
-  client:
-    build: client_ng
-    ports:
-      - "3000:3000"
-    networks:
-      - main
-  #nginx:
-  #  build: nginx
-  #  ports:
-  #    - "80:80"
-  #  networks:
-  #    - main
+      - 80:80
 
-networks:
-  main:
+  client:
+    image: deltachess-client
+    container_name: deltachess-client
+    build:
+      context: ./client_ng
+    depends_on:
+      - server
+    ports:
+      - 3000:3000
+    restart: on-failure
+
+  server:
+    image: deltachess-server
+    container_name: deltachess-server
+    build:
+      context: ./server
+    ports:
+      - 5000:5000
+    restart: on-failure
