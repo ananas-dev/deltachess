@@ -25,5 +25,5 @@ RUN cargo build --release --bin deltachess-server
 FROM rust as runtime
 WORKDIR /deltachess-server
 COPY --from=builder /deltachess-server/target/release/deltachess-server /usr/local/bin
-EXPOSE 8080
+EXPOSE 5000
 ENTRYPOINT ["/usr/local/bin/deltachess-server"]
