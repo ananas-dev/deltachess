@@ -15,7 +15,7 @@ services:
     image: deltachess-client
     container_name: deltachess-client
     build:
-      context: ./client_ng
+      context: ./client
     depends_on:
       - server
     ports:
